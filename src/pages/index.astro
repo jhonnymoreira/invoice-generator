@@ -1,0 +1,218 @@
+---
+import { invoiceData } from '~/data/invoiceData';
+import { priceFormatter } from '~/utils';
+import '@fontsource/ibm-plex-mono/300.css';
+import '@fontsource/lexend/300.css';
+import '@fontsource/lexend/600.css';
+
+const {
+  bankingDetails: {
+    beneficiaryBank,
+    beneficiaryCustomer,
+    intermediaryBank,
+  },
+  description,
+  dueDate,
+  id,
+  issuedAt,
+  payee,
+  payer,
+  total,
+} = invoiceData;
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta
+      name='viewport'
+      content='width=device-width'
+    />
+    <link
+      rel='icon'
+      type='image/svg+xml'
+      href='/favicon.svg'
+    />
+    <title>Invoice #{id} // jhonnymoreira</title>
+  </head>
+  <body class='box-border flex h-screen flex-col p-12 text-stone-800'>
+    <header class='mb-8 box-border flex flex-col'>
+      <div class='text-3xl font-semibold uppercase'>
+        Invoice <span class='text-indigo-700'>#{id}</span>
+      </div>
+    </header>
+    <main class='flex flex-col'>
+      <div class='mb-8 grid grid-cols-3 gap-8'>
+        <section class='flex flex-col'>
+          <h2
+            class='mb-1 text-2xl font-semibold uppercase text-indigo-700'>
+            Issued by
+          </h2>
+          <ul class='text-sm'>
+            <li>{payee.name} (CNPJ: {payee.EIN})</li>
+            <li>
+              {payee.address}, {payee.city} ({payee.zipCode})
+            </li>
+            <li>{payee.state} - {payee.country}</li>
+            <li>
+              <a
+                class='cursor-pointer text-indigo-400 underline decoration-indigo-400 decoration-solid decoration-2 underline-offset-4'
+                href={`mailto:${payee.email}?subject=Invoice+#${id}`}
+                rel='noreferrer'
+                target='_blank'
+                title='Email Jhonny about this invoice'>
+                {payee.email}</a
+              >
+              // <span>{payee.phone}</span>
+            </li>
+          </ul>
+        </section>
+        <section class='flex flex-col'>
+          <h2
+            class='mb-1 text-2xl font-semibold uppercase text-indigo-700'>
+            Billed to
+          </h2>
+          <ul class='text-sm'>
+            <li>{payer.name}</li>
+            <li>{payer.address}, {payer.city} ({payer.zipCode})</li>
+            <li>{payer.state} - {payer.country}</li>
+          </ul>
+        </section>
+        <section class='flex flex-col'>
+          <h3
+            class='mb-1 text-2xl font-semibold uppercase text-indigo-700'>
+            Invoice total
+          </h3>
+          <p class='text-2xl'>{priceFormatter.format(total)}</p>
+          <p class='inline-flex text-sm'>
+            Issued at&nbsp;
+            <span class='font-semibold text-indigo-900'>
+              {issuedAt}
+            </span>, due by&nbsp;
+            <span class='font-semibold text-indigo-900'>
+              {dueDate}
+            </span>
+          </p>
+        </section>
+      </div>
+      <div class='grid grid-cols-3 gap-8'>
+        <section class='col-span-2 flex flex-col'>
+          <h3
+            class='mb-1 text-2xl font-semibold uppercase text-indigo-700'>
+            Banking details
+          </h3>
+          <div class='grid grid-cols-2 gap-8'>
+            <div class='grid gap-4'>
+              <section>
+                <h2
+                  class='text-md font-semibold uppercase text-indigo-900'>
+                  Beneficiary Customer
+                </h2>
+                <ul class='text-sm'>
+                  <li>
+                    <span class='text-indigo-900'>Name:</span>
+                    {beneficiaryCustomer.name}
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'>IBAN:</span>
+                    {beneficiaryCustomer.IBAN}
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'> Address:</span>
+                    {beneficiaryCustomer.address}, {
+                      beneficiaryCustomer.city
+                    } ({beneficiaryCustomer.zipCode})
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'>
+                      State & Country:
+                    </span>
+                    {beneficiaryCustomer.state} - {
+                      beneficiaryCustomer.country
+                    }
+                  </li>
+                </ul>
+              </section>
+              <section>
+                <h2
+                  class='text-md font-semibold uppercase text-indigo-900'>
+                  Beneficiary Bank
+                </h2>
+                <ul class='text-sm'>
+                  <li>
+                    <span class='text-indigo-900'>Bank Name:</span>
+                    {beneficiaryBank.name}
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'>SWIFT Code:</span>
+                    {beneficiaryBank.swiftCode}
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'>Address:</span>
+                    {beneficiaryBank.address}, {beneficiaryBank.city} ({
+                      beneficiaryBank.zipCode
+                    })
+                  </li>
+                  <li>
+                    <span class='text-indigo-900'>State & Country:</span
+                    >
+                    {beneficiaryBank.state} - {beneficiaryBank.country}
+                  </li>
+                </ul>
+              </section>
+            </div>
+            <div>
+              <h2
+                class='text-md font-semibold uppercase text-indigo-900'>
+                Intermediary Bank
+              </h2>
+              <ul class='text-sm'>
+                <li>
+                  <span class='text-indigo-900'> Bank Name:</span>
+                  {intermediaryBank.name}
+                </li>
+                <li>
+                  <span class='text-indigo-900'> Account Holder:</span>
+                  {intermediaryBank.accountHolder}
+                </li>
+                <li>
+                  <span class='text-indigo-900'> Account Number:</span>
+                  {intermediaryBank.accountNumber}
+                </li>
+                <li>
+                  <span class='text-indigo-900'> SWIFT Code:</span>
+                  {intermediaryBank.swiftCode}
+                </li>
+                <li>
+                  <span class='text-indigo-900'> State & Country:</span>
+                  {intermediaryBank.state} - {intermediaryBank.country}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class='flex flex-col'>
+          <h3
+            class='mb-1 flex text-2xl font-semibold uppercase text-indigo-700'>
+            Work description
+          </h3>
+          <pre
+            class='flex whitespace-pre-wrap text-xs'>{description}</pre>
+        </section>
+      </div>
+    </main>
+    <footer class='mt-auto flex flex-row justify-end'>
+      <p class='inline-flex flex-col items-end'>
+        <span class='text-3xl font-semibold text-indigo-700'>
+          jhonnymoreira
+        </span>
+        <span
+          class='text-md inline-flex items-center font-mono leading-relaxed'>
+          <span class='mr-1'>///////</span>
+          <span class='text-indigo-400'>2022</span>
+        </span>
+      </p>
+    </footer>
+  </body>
+</html>

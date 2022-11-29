@@ -1,0 +1,1 @@
+export { priceFormatter } from './priceFormatter';
