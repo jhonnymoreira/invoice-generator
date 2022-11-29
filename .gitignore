@@ -1,0 +1,14 @@
+.output/
+dist/
+node_modules/
+playwright-report/
+playwright/.cache/
+test-results/
+
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+.env
+.env.production
