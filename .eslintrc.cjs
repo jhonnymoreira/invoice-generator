@@ -7,20 +7,25 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:astro/recommended',
     'plugin:jsx-a11y/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
   ],
   overrides: [
     {
+      extends: ['plugin:astro/recommended'],
       files: ['*.astro'],
       parser: 'astro-eslint-parser',
       parserOptions: {
         extraFileExtensions: ['.astro'],
         parser: '@typescript-eslint/parser',
       },
+    },
+    {
+      extends: [
+        'plugin:react-hooks/recommended',
+        'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+      ],
+      files: ['*.tsx'],
     },
   ],
   parser: '@typescript-eslint/parser',
