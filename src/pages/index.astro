@@ -46,12 +46,16 @@ const {
       name='viewport'
       content='width=device-width'
     />
+    <meta
+      name='description'
+      content={`Contains the details of the Invoice #${id}: Work description, invoice total value, issuer and billed details, plus banking details.`}
+    />
     <link
       rel='icon'
       type='image/svg+xml'
       href='/favicon.svg'
     />
-    <title>Invoice #{id} // jhonnymoreira</title>
+    <title>{`Invoice #${id} // jhonnymoreira`}</title>
   </head>
   <body class='box-border flex h-screen flex-col p-12 text-stone-800'>
     <header class='mb-8 box-border flex flex-col'>
@@ -59,9 +63,9 @@ const {
         Invoice <span class='text-indigo-700'>#{id}</span>
       </h1>
     </header>
-    <main class='flex flex-col'>
-      <div class='mb-8 grid grid-cols-3 gap-8'>
-        <section class='flex flex-col'>
+    <main class='grid gap-8'>
+      <div class='grid grid-cols-3 gap-8'>
+        <section>
           <H2>Issued by</H2>
           <List>
             <ListItem>{payee.name} (CNPJ: {payee.EIN})</ListItem>
@@ -77,11 +81,12 @@ const {
                 title='Email Jhonny about this invoice'>
                 {payee.email}
               </Link>
-              // <span>{payee.phone}</span>
+              {' // '}
+              <span>{payee.phone}</span>
             </ListItem>
           </List>
         </section>
-        <section class='flex flex-col'>
+        <section>
           <H2>Billed to</H2>
           <List>
             <ListItem>{payer.name}</ListItem>
@@ -89,7 +94,7 @@ const {
             <ListItem>{locationFormatter.format(payer)}</ListItem>
           </List>
         </section>
-        <section class='flex flex-col'>
+        <section>
           <H2>Invoice total</H2>
           <p class='text-2xl'>{priceFormatter.format(total)}</p>
           <p class='flex text-sm'>
@@ -100,76 +105,76 @@ const {
           </p>
         </section>
       </div>
-    </main>
-    <div class='grid grid-cols-3 gap-8'>
-      <section class='col-span-2 flex flex-col'>
-        <H2>Banking details</H2>
-        <div class='grid grid-cols-2 gap-8'>
-          <div class='grid gap-4'>
-            <section>
-              <H3>Beneficiary Customer</H3>
-              <List>
-                <LabeledListItem label='Name'>
-                  {beneficiaryCustomer.name}
-                </LabeledListItem>
-                <LabeledListItem label='IBAN'>
-                  {beneficiaryCustomer.IBAN}
-                </LabeledListItem>
-                <LabeledListItem label='Address'>
-                  {addressFormatter.format(beneficiaryCustomer)}
-                </LabeledListItem>
-                <LabeledListItem label='State & Country'>
-                  {locationFormatter.format(beneficiaryCustomer)}
-                </LabeledListItem>
-              </List>
-            </section>
-            <section>
-              <H3>Beneficiary Bank</H3>
+      <div class='grid grid-cols-3 gap-8'>
+        <section class='col-span-2 flex flex-col'>
+          <H2>Banking details</H2>
+          <div class='grid grid-cols-2 gap-8'>
+            <div class='grid gap-4'>
+              <section>
+                <H3>Beneficiary Customer</H3>
+                <List>
+                  <LabeledListItem label='Name'>
+                    {beneficiaryCustomer.name}
+                  </LabeledListItem>
+                  <LabeledListItem label='IBAN'>
+                    {beneficiaryCustomer.IBAN}
+                  </LabeledListItem>
+                  <LabeledListItem label='Address'>
+                    {addressFormatter.format(beneficiaryCustomer)}
+                  </LabeledListItem>
+                  <LabeledListItem label='State & Country'>
+                    {locationFormatter.format(beneficiaryCustomer)}
+                  </LabeledListItem>
+                </List>
+              </section>
+              <section>
+                <H3>Beneficiary Bank</H3>
+                <List>
+                  <LabeledListItem label='Bank Name'>
+                    {beneficiaryBank.name}
+                  </LabeledListItem>
+                  <LabeledListItem label='SWIFT Code'>
+                    {beneficiaryBank.swiftCode}
+                  </LabeledListItem>
+                  <LabeledListItem label='Address'>
+                    {addressFormatter.format(beneficiaryBank)}
+                  </LabeledListItem>
+                  <LabeledListItem label='State & Country'>
+                    {locationFormatter.format(beneficiaryBank)}
+                  </LabeledListItem>
+                </List>
+              </section>
+            </div>
+            <div>
+              <H3>Intermediary Bank</H3>
               <List>
                 <LabeledListItem label='Bank Name'>
-                  {beneficiaryBank.name}
+                  {intermediaryBank.name}
+                </LabeledListItem>
+                <LabeledListItem label='Account Holder'>
+                  {intermediaryBank.accountHolder}
+                </LabeledListItem>
+                <LabeledListItem label='Account Number'>
+                  {intermediaryBank.accountNumber}
                 </LabeledListItem>
                 <LabeledListItem label='SWIFT Code'>
-                  {beneficiaryBank.swiftCode}
-                </LabeledListItem>
-                <LabeledListItem label='Address'>
-                  {addressFormatter.format(beneficiaryBank)}
+                  {intermediaryBank.swiftCode}
                 </LabeledListItem>
                 <LabeledListItem label='State & Country'>
-                  {locationFormatter.format(beneficiaryBank)}
+                  {locationFormatter.format(intermediaryBank)}
                 </LabeledListItem>
               </List>
-            </section>
+            </div>
           </div>
-          <div>
-            <H3>Intermediary Bank</H3>
-            <List>
-              <LabeledListItem label='Bank Name'>
-                {intermediaryBank.name}
-              </LabeledListItem>
-              <LabeledListItem label='Account Holder'>
-                {intermediaryBank.accountHolder}
-              </LabeledListItem>
-              <LabeledListItem label='Account Number'>
-                {intermediaryBank.accountNumber}
-              </LabeledListItem>
-              <LabeledListItem label='SWIFT Code'>
-                {intermediaryBank.swiftCode}
-              </LabeledListItem>
-              <LabeledListItem label='State & Country'>
-                {locationFormatter.format(intermediaryBank)}
-              </LabeledListItem>
-            </List>
-          </div>
-        </div>
-      </section>
-      <section class='flex flex-col'>
-        <H2>Work description</H2>
-        <Pre>{description}</Pre>
-      </section>
-    </div>
+        </section>
+        <section class='flex flex-col'>
+          <H2>Work description</H2>
+          <Pre>{description}</Pre>
+        </section>
+      </div>
+    </main>
+    <footer class='mt-auto flex flex-row justify-end'>
+      <Watermark currentYear={currentYear} />
+    </footer>
   </body>
-  <footer class='mt-auto flex flex-row justify-end'>
-    <Watermark currentYear={currentYear} />
-  </footer>
 </html>
